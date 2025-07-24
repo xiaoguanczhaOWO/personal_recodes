@@ -1,0 +1,482 @@
+###day3 二分
+
+##A
+
+#TE * 1
+
+#刚开始就想到遍历但是只开了边界为sqrt，T了，故改了初始化为sqrt - 81
+
+#Code
+include<bits/stdc++.h>
+using namespace std;
+const double E =1e-9;
+const int Max = 1e5+5;
+
+struct wow_is_erfen
+{
+  long long n;
+
+  long long calc(int x)
+  {
+    int res =0;
+    while(x)
+    {
+      res += x %10;
+      x/=10;
+    }
+    return res;
+  }
+	void UWU()
+	{
+    cin >>n;
+    long long left = 0,right =1e18;
+    long long ant =-1;
+    for(long long x =max(1LL,(long long)sqrt(n)-81);x <= sqrt(n) +1;x++)
+    {
+      if(x * x + x * calc(x) == n)
+      {
+        ant = x;
+        break;
+      }
+    }
+    cout <<ant <<endl;
+	}
+};
+int main(){
+	ios::sync_with_stdio(0);
+	cin.tie(0);cout.tie(0);
+	
+
+	wow_is_erfen OWO;
+	OWO.UWU();
+	
+    
+  return 0;
+
+}
+
+/*
+            |   |
+______   ___|___|___
+|    |      |   |
+|____|    _________
+          |   |   |
+          |___|___|
+          |   |   |
+          |___|___|
+
+
+*/
+
+
+
+##b
+
+#wa*1
+
+#left和right修改弄反，求最大值的时候应该是Check return true时left = mid
+                                                      else right= mid
+
+#Code:
+#include<bits/stdc++.h>
+using namespace std;
+const double E =1e-9;
+const int Max = 1e5+5;
+
+struct wow_is_erfen
+{
+  long long n, m ,k;
+  long long l,r;
+  long long calc(long long num,long long x)
+  {
+    if(num <x)return((x-1 + x-num)*num) /2;
+    else return (x * (x-1)/2 + num - (x -1));
+  }
+
+  bool ANGH(long long x)
+  {
+    long long tot = calc(l,x) + calc(r,x) + x;
+    // cout <<x<<" "<<tot <<endl;
+    return tot <=m;
+  }
+  
+	void UWU()
+	{
+    cin >>n >>m >>k;
+    l =k-1;r = n-k;
+    int left_ =1,right_ = m-n +1;
+    int ant ;
+    while(left_ <= right_)
+    {
+      int mid = (left_ +right_)/2;
+      if (ANGH(mid)) 
+          left_ = mid +1,ant = mid; 
+      else right_ = mid -1;
+    }
+    cout <<ant<<endl;
+  }
+};
+int main(){
+	ios::sync_with_stdio(0);
+	cin.tie(0);cout.tie(0);
+
+	wow_is_erfen OWO;
+	OWO.UWU();
+	
+    
+  return 0;
+
+}
+
+
+##C
+
+#AC ,WA *0
+
+#Code:
+#include<bits/stdc++.h>
+using namespace std;
+const double E =1e-9;
+const int Max = 1e5+5;
+
+struct wow_is_erfen
+{
+  int n,k;
+  struct M
+  {
+    long long t,l,w;
+  };
+  vector<M>m;
+  bool APL(long long s)
+  {
+    long long tot = 0;
+    for(auto [t,l,w] : m)
+    {
+      long long each = t * l + w;
+      tot += (s / each) * l;
+      tot += min(l,(s %each)/t);
+      if(tot >= k)return true;
+    }
+    return tot >= k;
+
+  }
+	void UWU()
+	{
+    cin >>n >>k;
+    m.resize(n);
+    for(auto &[t,l,w] :m)
+      cin >>t >>l >>w;
+    long long left_=1,right_ = 2e18;
+    while(left_  +1< right_)
+    {
+      long long mid = (left_ + right_)/2;
+      if(APL(mid))
+        right_ = mid ;
+      else 
+        left_ = mid ;
+    }
+    cout <<right_ <<endl;
+
+	}
+};
+int main(){
+	ios::sync_with_stdio(0);
+	cin.tie(0);cout.tie(0);
+	
+	int T;cin >>T;
+	while(T--)
+	{
+		wow_is_erfen OWO;
+		OWO.UWU();
+	}
+    
+    return 0;
+
+}
+
+
+##D
+
+#wa*1
+
+#开的 long double 结果不精确，故开double
+
+#Code：
+#include<bits/stdc++.h>
+using namespace std;
+const double E =1e-9;
+const int Max = 1e5+5;
+
+
+
+
+struct wow_is_erfen
+{
+  long double k,d,t;
+  bool CCAC(int time)
+  {
+    long double tot = 0.0;
+    if(d <= t)
+      tot += time * 2.0;
+    else
+    {
+      long double cycle = d + k ;
+      long double zhen = floor(time / d);
+      tot += zhen * cycle;
+      long double least = time - zhen * d;
+      tot += least + min(least,t);
+    }
+    return tot >= 2 * t;
+    
+  }
+
+	void UWU()
+	{
+    cout <<fixed <<setprecision(11);
+    cin >>k >>d >>t;
+    long double left = 0.0,right = 1e18;
+    while(right - left > E)
+    {
+      long double mid = left + (right - left)/2;
+      if(CCAC(mid))right = mid;
+      else         left  = mid;
+    }
+    cout <<left <<endl;
+	}
+};
+
+
+
+struct WOW_is_moni
+{
+  
+  long double k,d,t;
+  long double ant = 0.0;
+  void UWU()
+  {
+    cout <<fixed<< setprecision(11);
+    cin >>k >>d >>t;
+    long double cycle = (ceil(k/d)*d-k)/2 +k;
+    long long tot= t / cycle;
+    long double least =(t - cycle * tot);
+    if(least <=k)
+      ant += least + (ceil(k/d)*d)*tot;
+    else
+      ant = (ceil(k/d)*d)*tot +k +(least-k)/2;
+    cout <<ant <<endl;
+
+    
+  }
+};
+
+int main(){
+	ios::sync_with_stdio(0);
+	cin.tie(0);cout.tie(0);
+	
+
+	WOW_is_moni OWO;
+	OWO.UWU();
+	
+    
+  return 0;
+
+}
+
+/*
+            |   |
+______   ___|___|___
+|    |      |   |
+|____|    _________
+          |   |   |
+          |___|___|
+          |   |   |
+          |___|___|
+
+
+*/
+
+##E
+
+#RE*1
+
+#两个vector resize的时候大小弄反了
+
+#Code：
+#include<bits/stdc++.h>
+using namespace std;
+const double E =1e-9;
+const int Max = 1e5+5;
+
+struct wow_is_erfen
+{
+  int n,k;
+  struct Q
+  {
+    int t,c;
+  };
+  vector<long long>cnt;
+  vector<Q>qh;
+
+  bool Check(int a)
+  {
+    long long lost  =0;
+    vector<long long>tmp = cnt;
+    for(int q=1;q<=a;q++)
+    {
+      if(qh[q].t >k || qh[q].t <=0)return false;
+      long long have = tmp[qh[q].t];
+      tmp[qh[q].t]-=min(have , (long long)qh[q].c);
+      lost += max(0LL ,(long long)qh[q].c - have);
+    }
+    long long total =0;
+    for(int q=1;q <=k;q++)
+      total += tmp[q] /3;
+    return total >= lost;
+  }
+  
+  void UWU()
+  {
+    cin >>n >>k;
+    cnt.resize(k +1);
+    qh.resize(n +1);
+    for(int q=1;q <=k;q++)
+      cin >>cnt[q];
+    for(int q=1;q <=n;q++)
+      cin >>qh[q].t >>qh[q].c;
+    int left =1,right = n,ans=0;
+    while(left <= right)
+    {
+      int mid = (left +right) >>1;
+      if(Check(mid))left = mid +1,ans=mid;
+      else         right = mid -1;
+    }
+    cout <<ans <<endl;
+  }
+};
+int main(){
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+  
+  wow_is_erfen OWO;
+  OWO.UWU();
+  
+  return 0;
+}
+
+
+##G
+
+#AC
+
+#Code:
+#include<bits/stdc++.h>
+using namespace std;
+const double E =1e-9;
+const int Max = 1e5+5;
+
+struct Point
+{
+	double x,y;
+};
+
+struct wow_is_erfen
+{
+	
+	double n ,a ,b ,c;
+	vector<Point>point;
+
+	
+	// bool cp(double x)
+	// {
+	// 	if(fabs(x) <= E)return 0;
+	// 	return (x >0 ? 1 : -1);
+	// }
+	
+	
+	void init()
+	{
+		if(a)
+		{
+			double xx = -(c/a);
+			double angle = -atan2(-a,b);
+			
+			for(auto &[x,y] : point)
+			{
+				x -= xx;
+				
+				double nx = x * cos(angle) - y * sin(angle);
+				double ny = x * sin(angle) + y * cos(angle);
+
+				x =nx;y =ny;
+							
+			}
+		}
+		else if(b)
+		{
+			double yy = -(c/b);
+			for(auto &[x,y] : point)
+				y-=yy;
+		}
+		
+	}
+	
+	bool AIL(double r)
+	{
+	 	double left =-1e18 ,right =1e18;
+		
+		for(auto [x,y] : point)
+		{
+			if(r < fabs(y))
+				return false;
+				
+			double xx = sqrt(r * r - y * y);
+			left = max(left, x -xx);
+			right= min(right,x +xx);
+			
+			if(right < left)
+				return false;
+		}
+		return true;
+	}
+	
+	void UWU()
+	{
+    cout <<fixed<< setprecision(15);
+		cin>>n;
+		point.resize(n);
+		for(auto &[x,y] : point)
+			cin >>x >>y;
+		
+		cin >>a >>b >>c;
+		
+		init();
+
+		double left=0 ,right =1e6;
+		for(int owo =0;owo<100;owo++)
+		{
+			double mid =(left + right)/2;
+		
+			if(AIL(mid))right =mid;
+			else        left  =mid;
+			
+			
+		}
+		cout <<fixed<< setprecision(15)<<right <<endl;
+		
+
+	}
+};
+int main(){
+	ios::sync_with_stdio(0);
+	cin.tie(0);cout.tie(0);
+	
+	int T;cin >>T;
+	while(T--)
+	{
+		wow_is_erfen OWO;
+		OWO.UWU();
+	}
+    
+    return 0;
+
+}
