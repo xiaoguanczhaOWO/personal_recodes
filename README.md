@@ -1,2 +1,3 @@
 # personal_recodes
-自用
+Used for myself
+
