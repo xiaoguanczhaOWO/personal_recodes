@@ -1,0 +1,683 @@
+###day 1 Simulation
+
+##A   
+
+#AC ,WA*1
+
+#����ģ�ͼ򻯹��ȵ��º�����u1v1u2v2�Ĵ�С��ϵ 
+
+#Code��
+#include<bits/stdc++.h>
+using namespace std;
+const int Max = 1e5 +5,Mod = 1e9 +7;
+
+struct WOW_IS_simulation
+{
+  int n ,m ,k ,x ,y ,Q ,z0 ,h ,u0 ,v0 ,u1 ,v1;
+  void Solve()
+  {
+    cin >>z0 >>h >>u0 >>v0 >>u1 >>v1;
+    int mx =max(u0,u1),my = max(v0,v1);
+    int nx = min(u0,u1),ny = min(v0,v1);
+    cin >>Q;
+    while(Q--)
+    {
+      int x,y,z;cin >>x >>y >>z;
+      if(x >=nx && x <=mx &&y >=ny &&y <=my &&z >=z0 &&z <=z0 +h)
+      cout <<"Yes" <<endl;
+      else 
+      cout <<"No" <<endl;
+    }
+  }
+};s
+
+int main()
+{
+
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+
+  WOW_IS_simulation OWO;
+  OWO.Solve();
+}
+
+
+##B
+
+#AC   RE *1
+
+#���� :�߽�Լ�����㵼��Խ�磬��ֱ��ƴ���ַ���
+
+#Code��
+?#include<bits/stdc++.h>
+using namespace std;
+const int Max = 5e5 +5,Mod = 1e9 +7;
+int T;
+long long sum[Max] = {0};
+struct WOW_IS_simulation
+{
+  long long n ,k ;
+  string s;
+  void Solve()
+  {
+    cin >>n >>k;
+    cin >>s;
+    s = s + s;
+    s = 'F' + s;
+    k =min(k,n);
+    long long ant = 0;
+    for(int q=1;q <=n+k;q++)
+    {
+      sum[q] = 0;
+      sum[q] = max(sum[q],sum[q-1]);
+      if(q+6 <=n +k)
+        if(s.substr(q,7) == "nanjing")
+          ++sum[q];
+      if(q >=n)
+        ant = max(ant ,sum[q] - sum[q-n]);
+    }
+    cout <<ant <<endl;
+  }
+};
+
+signed main()
+{
+
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+  cin >>T;
+  while(T--)
+  {  
+    WOW_IS_simulation OWO;
+    OWO.Solve();
+  }
+}
+
+
+##C
+
+#AC 
+
+#Code:
+include<bits/stdc++.h>
+using namespace std;
+const int Max = 1e5 +5,Mod = 1e9 +7;
+
+struct WOW_IS_simulation
+{
+  int n ,m ,k ,x ,y ,Q;
+  string csd()
+    {
+      char a;
+      string s;
+      for(int q=0;q <k;q++)
+      {
+        cin >>a;
+        s = s + a;
+      }
+      return s;
+    }
+  void Solve()
+  {
+    cin >>n >>m >>k;
+    int cnt =0;
+    string str;
+    string st[4];
+    string now_str;
+    int x=0,y=0;
+    
+    for(int q=1;q <=n;q++)
+      for(int w=1;w <=m;w++,cnt ++)
+      {
+        str =csd();
+        if(q==1 && w==1)now_str=str;
+        else if(str !=now_str)
+        {
+          if(x || y)
+          {
+            now_str = str;
+            x =1;y=1;
+          }
+          else 
+          {
+            x =q;y = w;
+          }
+        }
+      }
+    cout <<x <<" " <<y <<endl;
+  }
+};
+
+int main()
+{
+
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+
+  WOW_IS_simulation OWO;
+  OWO.Solve();
+}
+
+
+
+
+##D
+
+#AC ,WA*1
+
+#����û�м��ϻ�׼�㸴ԭ�Ĵ���
+
+#code
+#include<bits/stdc++.h>
+using namespace std;
+const int Max = 1e6 +5,Mod = 1e9 +7;
+
+struct WOW_IS_simulation
+{
+  int n ,m ,k ,x ,y ,Q;
+  int num[Max];
+  int ant = INT_MAX;
+  void Solve()
+  {
+    cin >>n;
+    for(int q=0;q <n;q++)
+      cin >>num[q];
+    for(int q=0;q <4;q++)
+    {
+      int now  = 0;
+      for(int w=0;w <n;w++)
+      {
+        if(num[w] >=q)now += num[w]-q;
+        else now += 4 + num[w] - q;
+      }
+      int now_val = (now + q)%4;
+      if(now_val != 0)
+        now += 4-now_val;
+      ant = min(now,ant);
+    }
+    cout <<ant <<endl;
+
+
+  }
+};
+
+int main()
+{
+
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+
+  WOW_IS_simulation OWO;
+  OWO.Solve();
+}
+
+##E
+
+#AC
+
+#code:
+#include<bits/stdc++.h>
+using namespace std;
+const int Max = 5e5 +5,Mod = 1e9 +7;
+
+struct WOW_IS_simulation
+{
+  int m ,k ,x ,y ,Q;
+  int ant =0;
+  map<string,int>mp;
+  void Solve()
+  {
+    char ch;
+    string str;
+    
+    while(true)
+    {
+      cin >>str;
+      string s;
+      for(auto q : str)
+      {
+        if(isdigit(q))goto nex;
+        if(isupper(q)) s += tolower(q);
+        if(islower(q))s += q;
+      }
+      mp[s] ++;
+    }
+    nex:
+    int n =0;
+    for(auto q:str)n = n * 10 + q - '0';
+    while(n--)
+    {
+      cin >>str;
+      if(mp.count(str))mp.erase(str);
+    }
+    cout <<mp.size() <<endl;
+
+  }
+};
+
+int main()
+{
+
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+
+  WOW_IS_simulation OWO;
+  OWO.Solve();
+}
+
+
+##F
+
+#WA*3
+
+#���ȼ򻯵�����ȫ����
+
+#code:
+#include<bits/stdc++.h>
+using namespace std;
+const int Max = 1e5 +5,Mod = 1e9 +7;
+int T;
+struct WOW_IS_simulation
+{
+  int x0,y0,x1,y1,x2,y2;
+  int to(int now,int to,int fen)
+  {
+    if(to >now)swap(to,now);
+    return min(now -to ,to + fen - now);
+  }
+  bool in(int now,int n,int m,int fen)
+  {
+    if(n > m)
+      return (now >= n || now <= m) && (now >= 0 && now <= fen);
+    else 
+      return (now >=n && now <=m);
+  }
+  int Fun(int now,int n,int m,int fen)
+  {
+    if(in(now,n,m,fen))
+      return now;
+    int tn = to(now ,n ,fen);
+    int tm = to(now ,m ,fen);
+    if(tn > tm)return m ;
+    else if(tm > tn)return n;
+    else return min(n,m);
+  }
+  void Solve()
+  {
+    cin >>x0 >>y0 >>x1 >>y1 >>x2 >>y2;
+    cout <<Fun(x0,x1,x2,12)<<" "<<Fun(y0,y1,y2,60) <<endl;
+  }
+};
+
+int main()
+{
+
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+  cin >>T;
+  while (T--)
+  {
+    WOW_IS_simulation OWO;
+    OWO.Solve();
+  }
+  return 0;
+}
+
+
+##F
+
+#Wa*4
+
+#����û��long long
+
+#Code:
+#include<bits/stdc++.h>
+#define int long long
+using namespace std;
+const int Max = 1e5 +5,Mod = 1e9 +7;
+int T;
+struct WOW_IS_simulation
+{
+  int n ,m ,k ,x ,y ,Q;
+  bool beg[Max] ={false};
+  int get[Max];
+  void init()
+  {
+    for(int q=1;q <=n;q++)
+      get[q] = m;
+    for(int q=1;q <=m;q++)
+      player[q].id = q;
+  }
+  struct Player
+  {
+    int sc=0,id;
+  }player[Max];
+  unordered_map<int,int>did[Max];
+  void Solve()
+  {
+    cin >>n >>m >>Q;
+    init();
+    while(Q--)
+    {
+      int op,id;
+      cin >>op;
+      if(op ==1)
+      {
+        cin >>x;
+        beg[x] = true;
+      }
+      if(op ==2)
+      {
+        cin >>id >>x;
+        if(beg[x] && !did[id].count(x))
+        {
+          did[id].insert({x,1});
+          player[id].sc += get[x]--;
+        }
+      }
+      if(op ==3)
+      {
+        cin >>id >>x;
+        if(beg[x] && !did[id].count(x))
+          did[id].insert({x,1});
+      }
+    }
+    sort(player +1,player +1 +m,[](Player a,Player b){return a.sc > b.sc;});
+    for(int q=1;q <=m;q++)
+      cout <<player[q].id <<" " <<player[q].sc <<endl;
+  }
+};
+
+signed main()
+{
+
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+  cin >>T;
+  while (T--)
+  {
+    WOW_IS_simulation OWO;
+    OWO.Solve();
+  }
+  
+  
+}
+
+
+
+###Day 2
+
+##A
+
+#AC
+
+#Code:
+//#include<Alan Mathison Turing>
+#include<bits/stdc++.h>
+using namespace std;
+const int Max = 1e3 + 5,Mod = 1e9 + 7;
+
+struct  WOW_is_greedy
+{
+  int n ,m ,Q ;
+  bool num[Max];
+  int ant = 0;
+  void UWU()
+  {
+    cin >>n;
+    bool _0= false;
+    for(int q=0;q <n;q++)
+      cin >>num[q];
+    bool beg = false;
+    for(int q=0;q <n;q++)
+    {
+      if(num[q]==true)beg = true;
+      if(beg)
+      {
+        if(num[q] == true)
+        {
+          ant ++;
+          if(_0)
+          {
+            ant ++;
+            _0 = false;
+          }
+        }
+
+        if(num[q] == false)
+          _0 = true;
+      }
+    }
+    cout <<ant <<endl;
+  }
+};
+
+int main()
+{
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+
+  WOW_is_greedy OWO;
+  OWO.UWU();
+
+  return 0;
+}
+
+/*          |    |
+        ____|____|____
+_______     |    |
+|     |
+|     |   _________
+|_____|  |    |    |
+         |____|____|
+         |    |    |
+         |____|____|
+*/
+
+
+##B
+
+#CE
+
+#������ΪʲôCE��������ѡ��C
+
+#code��//#include<Alan Mathison Turing>
+#include<bits/stdc++.h>
+using namespace std;
+const int Max = 1e5 + 5,Mod = 1e9 + 7;
+int T;
+
+struct  WOW_is_baoli
+{
+  int w;
+  long long l,r;
+  int ant = 0;
+  void UWU()
+  {
+    cin >>l >>r >>w;
+    for(int q=l;q <=r;q++)
+    {
+      string now = to_string(q);
+      for(int q=0;q <now.size()-1;q++)
+        if(now[q] + now[q+1] - '0' - '0'== w)
+          ant ++;
+    }
+    cout <<ant <<endl;
+
+  }
+};
+
+int main()
+{
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+  cin >>T;
+  while(T--)
+  {
+    WOW_is_baoli OWO;
+    OWO.UWU();
+  }
+  return 0;
+}
+
+/*          |    |
+        ____|____|____
+_______     |    |
+|     |
+|     |   _________
+|_____|  |    |    |
+         |____|____|
+         |    |    |
+         |____|____|
+*/
+
+
+##C
+
+#50pt 
+
+
+#������д�ı���
+
+#code:
+//#include<Alan Mathison Turing>
+#include<bits/stdc++.h>
+#define endl "\n"
+using namespace std;
+const int Max = 1e5 + 5,Mod = 1e9 + 7;
+
+struct  WOW_is_baoli
+{
+  int n ,m ,Q ;
+  long long left[Max],right[Max];
+  long long MIN  =1e18+1; 
+  bool in(int a,int b,int now)
+  {
+    //a>b 
+
+    for(int q=a;q <=b;q++)
+      if((q & now) ==now)
+        return true;
+    return false;
+  }
+  void UWU()
+  {
+    cin >>n;
+    bool OAO = false;
+    for(int q=0; q <n;q++)
+    {
+      cin >>left[q] >>right[q];
+      MIN = min(MIN,right[q]);
+      if(right[q] != 1e18)OAO = true;
+    }
+    if(!OAO){cout <<1e18 <<endl;return ;}
+    bool skip = false;
+    for(int q=MIN;q >=0;q--)
+    {
+      for(int w=0;w <n;w++)
+        if(!in(left[w],right[w],q))
+        {
+          skip = true;
+          break;
+        }
+      if(skip)
+      {
+        skip = false;
+        continue;
+      }
+      else 
+      {
+        cout <<q <<endl;
+        return ;
+      }
+    }
+  }
+};
+
+int main()
+{
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+
+  WOW_is_baoli OWO;
+  OWO.UWU();
+
+  return 0;
+}
+
+/*          |    |
+        ____|____|____
+ _____      |    |
+|     |
+|     |   _________
+|_____|  |    |    |
+         |____|____|
+         |    |    |
+         |____|____|
+*/
+
+
+##D
+
+#CE ����ͬB��
+
+#code
+//#include<Alan Mathison Turing>
+#include<bits/stdc++.h>
+using namespace std;
+const int Max = 1e5 + 5,Mod = 1e9 + 7;
+
+struct  WOW_is_baoli
+{
+  int n ,m ,Q ;
+  int dp[1005][1005] = {{0}};
+  int high[1005] = {0};
+  void init()
+  {
+    high[1] = 1;
+    for(int q=2;q <=1000;q++)
+      high[q] = high[q-1] +q;
+    dp[0][0] = 0;
+    for(int q=1;q <=n;q++)dp[q][0] =1;
+    for(int q=1;q <=m;q++)dp[0][q] =1;
+  }
+  void UWU()
+  {
+    cin >>n >>m;
+    init();
+    for(int q=1;q <=n;q++)
+    {
+      for(int w=1;w <=m;w++)
+      {
+        int tot = q +w;
+        int h = lower_bound(high , high+1001 ,tot ) -high -1;
+        int carry = tot - high[h];
+        if(q >=carry)dp[q][w] +=dp[q-carry][w];
+        if(w >=carry)dp[q][w] +=dp[q][w-carry];
+      }
+    }
+    cout <<dp[n][m];
+  }
+};
+ 
+int main()
+{
+  ios::sync_with_stdio(0);
+  cin.tie(0);cout.tie(0);
+
+  WOW_is_baoli OWO;
+  OWO.UWU();
+
+  return 0;
+}
+
+/*          |    |
+        ____|____|____
+ _____      |    |
+|     |
+|     |   _________
+|_____|  |    |    |
+         |____|____|
+         |    |    |
+         |____|____|
+*/
